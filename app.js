@@ -1,5 +1,4 @@
 const express = require('express')
-const bodyParser = require('body-parser')
 const todoController = require('./controladors/todoController')
 
 const app = express()
@@ -7,7 +6,7 @@ const app = express()
 //template engine
 app.set('view engine', 'ejs')
 //per carregar fitxers
-app.user(express.static('.'))
+app.use(express.static('.'))
 
 //contorladors
 todoController(app)

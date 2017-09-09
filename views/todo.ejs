@@ -1,0 +1,25 @@
+<html>
+	<head>
+		<title>TODO page</title>
+		<script
+			src="https://code.jquery.com/jquery-3.2.1.min.js"
+			integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+			crossorigin="anonymous"></script>
+		<script src="../public/assets/todo-list.js"></script>
+		<link href="../public/assets/style.css" rel="stylesheet" type="text/css" />
+	</head>
+	<body>
+		<h1>TODO list</h1>
+			<div id="todo-table">
+				<form>
+					<input type="text" name="item" placeholder="New item..." required>
+					<button type="submit">Add item</button>
+				</form>
+				<ul>
+					<% todo.forEach(item => { %>
+						<li> <%= item.item %> </li>
+					<%  }) %>
+				</ul>
+			</div>
+	</body>
+</html>
