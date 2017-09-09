@@ -1,35 +1,17 @@
+const express = require('express')
+const bodyParser = require('body-parser')
+const todoController = require('./controladors/todoController')
 
-$(document).ready(function(){
+const app = express()
 
-  $('form').on('submit', function(){
+//template engine
+app.set('view engine', 'ejs')
+//per carregar fitxers
+app.user(express.static('.'))
 
-      var item = $('form input');
-      var todo = {item: item.val()};
+//contorladors
+todoController(app)
 
-      $.ajax({
-        type: 'POST',
-        url: '/todo',
-        data: todo,
-        success: function(data){
-          //do something with the data via front-end framework
-          location.reload();
-        }
-      });
+app.listen(8080)
 
-      return false;
-
-  });
-
-  $('li').on('click', function(){
-      var item = $(this).text().replace(/ /g, "-");
-      $.ajax({
-        type: 'DELETE',
-        url: '/todo/' + item,
-        success: function(data){
-          //do something with the data via front-end framework
-          location.reload();
-        }
-      });
-  });
-
-});
+console.log('Escoltant al 8080...')
