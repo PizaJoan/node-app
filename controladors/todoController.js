@@ -10,31 +10,26 @@ const esquema = new mongoose.Schema({
 })
 const Model = mongoose.model('Model', esquema)
 
-let itemOne = Model({item: 'Primer test'}).save(err => {
-	if (err) throw err
-	console.log('guardat...')
-})
-
-let data = [{
-	item: 'get milk'
-}, {
-	item: 'let\'s get some milk'
-}, {
-	item: 'go boys'
-}]
-
 module.exports = function(app) {
 	app.get('/todo', (req, res) => {
-		res.render('todo', {todo: data})
+		//aconseguir dades de la base de dades
+		Model.find({}, (err, data) => {
+			if (err) throw err
+			res.render('todo', {todo: data})
+		})
 	})
 
 	app.post('/todo', urlencodedParser, (req, res) => {
-		data.push(req.body)
-		res.json(data)
+		let newModel = Model(req.body).save((err, data) => {
+			if (err) throw err
+			res.json(data)
+		})
 	})
 
 	app.delete('/todo/:item', (req, res) => {
-		data = data.filter(todo => todo.item.replace(/ /g, '-') !== req.params.item)
-		res.json(data)
+		Model.find({item: req.params.item.replace(/\-/g, ' ')}).remove((err, data) => {
+			if (err) throw err
+			res.json(data)
+		})
 	})
 }
